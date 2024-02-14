@@ -9,7 +9,9 @@ const authRoutes = require("./routes/auth");
 const imagesRoutes=require("./routes/images");
 require("dotenv").config();
 const users = require("./models/userModel");
-app.use(cors());
+app.use(cors({
+  origin: "*"
+}));
 app.use(express.json());
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: false }));

@@ -1,4 +1,4 @@
-export const host = "https://pixel-red-eight.vercel.app";
+export const host = "https://imagehub-backend-vihi.onrender.com";
 export const loginRoute = `${host}/api/auth/login`;
 export const registerRoute = `${host}/api/auth/register`;
 export const uploadimagesRoute =`${host}/api/images/upload`;

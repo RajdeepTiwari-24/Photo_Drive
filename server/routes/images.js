@@ -57,18 +57,24 @@ router.post("/upload", singleUpload, async (req, res) => {
   });
   
   router.post("/deleteImage", async (req, res) => {
-    console.log("Delete Route");
     try {
+      console.log("Delete Route");
       const userId = req.body.userid;
       const imageName = req.body.imagename;
       const user = await users.findById(userId);
-  
+      const parts = imageName.split("/");
+      const publicIdWithExtension = parts.pop(); // Get the last part of the URL
+      const publicId = publicIdWithExtension.split(".")[0]; // Remove the extension
+      console.log(publicId);
+      const deleteresult= await cloudinary.v2.uploader.destroy(publicId);
+      
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }
       user.images = user.images.filter(image => image !== imageName);
       await user.save();
       res.status(200).json({ message: "Image deleted successfully" });
+      //return res.status(200).json({ message: "All Good" })
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: "Internal server error" });

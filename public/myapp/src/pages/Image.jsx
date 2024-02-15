@@ -50,7 +50,6 @@ export default function Image() {
   };
 
   const deleteClick=(imagename)=>{
-    console.log("Delete Clicked");
     axios
     .post(deleteRoute, { userid: getuser, imagename: imagename })
     .then((res) => {

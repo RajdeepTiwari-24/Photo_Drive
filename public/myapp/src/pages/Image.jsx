@@ -6,24 +6,28 @@ import { uploadimagesRoute, getimagesRoute, deleteRoute } from "../utils/APIRout
 
 export default function Image() {
   const navigate = useNavigate();
-  const getuser = JSON.parse(localStorage.getItem("USER"))._id;
+  const user = JSON.parse(localStorage.getItem("USER"));
+  const getuser = user ? user._id : null;
   const [file, setFile] = useState();
   const [images, setImages] = useState([]);
   const [reload, setreload] = useState(false);
+
   useEffect(() => {
-    if (!localStorage.getItem("USER")) {
+    if (!user) {
       navigate("/login");
     }
-  }, []);
+  }, [user, navigate]);
+
   useEffect(() => {
-    axios
-      .get(`${getimagesRoute}?userid=${getuser}`)
-      .then((res) => {
-        const imageData = Array.isArray(res.data) ? res.data : [];
-        setImages(imageData);
-      })
-      .catch((e) => console.log(e));
-    // console.log(reload);
+    if (getuser) {
+      axios
+        .get(`${getimagesRoute}?userid=${getuser}`)
+        .then((res) => {
+          const imageData = Array.isArray(res.data) ? res.data : [];
+          setImages(imageData);
+        })
+        .catch((e) => console.log(e));
+    }
   }, [reload]);
 
   const handleUpload = (e) => {
@@ -49,14 +53,14 @@ export default function Image() {
     navigate("/login");
   };
 
-  const deleteClick=(imagename)=>{
+  const deleteClick = (imagename) => {
     axios
-    .post(deleteRoute, { userid: getuser, imagename: imagename })
-    .then((res) => {
-      setreload((prevReload) => !prevReload);
-      alert(res.data.message);
-    })
-    .catch((e) => console.log(e));
+      .post(deleteRoute, { userid: getuser, imagename: imagename })
+      .then((res) => {
+        setreload((prevReload) => !prevReload);
+        alert(res.data.message);
+      })
+      .catch((e) => console.log(e));
   }
 
   return (
@@ -71,12 +75,8 @@ export default function Image() {
       <div className="image-section">
         <ul>
           {images.map((image) => (
-            <li>
-              <img
-                key={image.id}
-                src={`${image.image}`}
-                alt=""
-              />
+            <li key={image.id}>
+              <img src={`${image.image}`} alt="" />
               <button onClick={() => deleteClick(image.image)}>
                 Delete
               </button>
@@ -90,6 +90,7 @@ export default function Image() {
     </Container>
   );
 }
+
 
 const Container = styled.div`
   height: 100vh;

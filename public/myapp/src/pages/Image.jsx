@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
-import { uploadimagesRoute, getimagesRoute, deleteRoute } from "../utils/APIRoutes";
+import {
+  uploadimagesRoute,
+  getimagesRoute,
+  deleteRoute,
+} from "../utils/APIRoutes";
 
 export default function Image() {
   const navigate = useNavigate();
@@ -47,7 +51,7 @@ export default function Image() {
       })
       .catch((error) => console.error(error));
   };
-  
+
   const handleClick = () => {
     localStorage.clear();
     navigate("/login");
@@ -61,7 +65,7 @@ export default function Image() {
         alert(res.data.message);
       })
       .catch((e) => console.log(e));
-  }
+  };
 
   return (
     <Container>
@@ -70,16 +74,14 @@ export default function Image() {
         <h2>Please Select your file and click Upload.</h2>
         <input type="file" onChange={(e) => setFile(e.target.files[0])} />
         <button onClick={handleUpload}>Upload</button>
-      </div> 
+      </div>
       <h3>The following are the images in your drive:</h3>
       <div className="image-section">
         <ul>
           {images.map((image) => (
             <li key={image.id}>
               <img src={`${image.image}`} alt="" />
-              <button onClick={() => deleteClick(image.image)}>
-                Delete
-              </button>
+              <button onClick={() => deleteClick(image.image)}>Delete</button>
             </li>
           ))}
         </ul>
@@ -91,18 +93,30 @@ export default function Image() {
   );
 }
 
-
 const Container = styled.div`
-  height: 100vh;
+  /* * {
+    margin: 0px;
+    padding: 0px;
+  } */
+  * {
+    box-sizing: border-box;
+  }
+  /* height: 100vh; */
   width: 100vw;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
   position: relative;
   background-image: url("https://img.freepik.com/free-vector/neumorphic-round-shape-design-empty-white-banner_1017-43171.jpg?w=1380&t=st=1707828356~exp=1707828956~hmac=463bffd3b2c0102d76ec1f6a0892cd0eaec094e886360509f679bb5b51fd2892");
-  background-repeat: repeat-y;
+  /* width: 100vw; */
   background-size: cover;
+  background-position: center;
+  background-repeat: repeat-x;
+  background-attachment: fixed;
+  /* height: 100vh; */
   .top-section {
     width: 700px;
     padding: 25px;
@@ -113,6 +127,10 @@ const Container = styled.div`
     gap: 1rem;
     margin-top: 20px;
     backdrop-filter: blur(10px);
+    button {
+      font-size: 1.5rem;
+      padding: 10px 20px;
+    }
   }
 
   button {
@@ -120,11 +138,10 @@ const Container = styled.div`
     background-color: black;
     border: none;
     border-radius: 5px;
-    font-size: 1.5rem;
-    padding: 10px 20px;
+    font-size: 1rem;
+    padding: 5px 10px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-
     &:hover {
       background-color: black;
     }
@@ -134,8 +151,9 @@ const Container = styled.div`
     height: auto;
     border: 10px solid black;
     min-height: 50%;
-    ul{
-      list-style:none;
+    overflow-y: scroll;
+    ul {
+      list-style: none;
       display: flex;
       flex-direction: row;
       justify-content: center;
@@ -144,7 +162,11 @@ const Container = styled.div`
       margin: auto;
       padding: 1.5rem;
       flex-wrap: wrap;
-      li{
+      li {
+        background-color: white;
+        padding: 10px;
+        /* border: 1px solid black; */
+        box-shadow: 2px 2px 4px gray;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -155,6 +177,8 @@ const Container = styled.div`
 
   .logout-btn {
     /* align-self: flex-end; */
+    font-size: 1.5rem;
+    padding: 10px 20px;
     margin-top: auto;
     margin-bottom: 20px;
     width: 50vw;

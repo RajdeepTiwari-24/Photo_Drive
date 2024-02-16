@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import loader from "../assets/loader.gif";
 import axios from "axios";
 import {
   uploadimagesRoute,
@@ -15,6 +16,7 @@ export default function Image() {
   const [file, setFile] = useState();
   const [images, setImages] = useState([]);
   const [reload, setreload] = useState(false);
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!user) {
@@ -35,6 +37,10 @@ export default function Image() {
   }, [reload]);
 
   const handleUpload = (e) => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 3500);
     e.preventDefault();
     if (!file) {
       console.error("No file selected");
@@ -58,6 +64,10 @@ export default function Image() {
   };
 
   const deleteClick = (imagename) => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 3500);
     axios
       .post(deleteRoute, { userid: getuser, imagename: imagename })
       .then((res) => {
@@ -75,17 +85,27 @@ export default function Image() {
         <input type="file" onChange={(e) => setFile(e.target.files[0])} />
         <button onClick={handleUpload}>Upload</button>
       </div>
-      <h3>The following are the images in your drive:</h3>
-      <div className="image-section">
-        <ul>
-          {images.map((image) => (
-            <li key={image.id}>
-              <img src={`${image.image}`} alt="" />
-              <button onClick={() => deleteClick(image.image)}>Delete</button>
-            </li>
-          ))}
-        </ul>
-      </div>
+      {isLoading ? (
+        <img className="loader" src={loader} />
+      ) : (
+        <>
+          <h3>The following are the images in your drive:</h3>
+          <div className="image-section">
+            <ul>
+              {images.map((image) => (
+                <li key={image.id}>
+                  <img src={`${image.image}`} alt="" />
+                  <button onClick={() => deleteClick(image.image)}>
+                    Delete
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </>
+      )}
+      {/* {isLoading ? <img className="loader" src={loader} /> : ""} */}
+
       <button className="logout-btn" onClick={handleClick}>
         Logout
       </button>
@@ -149,7 +169,7 @@ const Container = styled.div`
   .image-section {
     width: 90%;
     height: auto;
-    border: 10px solid black;
+    border: 5px dashed black;
     min-height: 50%;
     overflow-y: scroll;
     ul {
@@ -174,7 +194,12 @@ const Container = styled.div`
       }
     }
   }
-
+  .loader {
+    height: 400px;
+    /* width: 200px; */
+    border: 2px solid black;
+    border-radius: 5%;
+  }
   .logout-btn {
     /* align-self: flex-end; */
     font-size: 1.5rem;

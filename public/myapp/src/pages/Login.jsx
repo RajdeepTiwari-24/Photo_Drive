@@ -30,7 +30,7 @@ export default function Login() {
   };
 
   const handleSubmit = async (event) => {
-    console.log("Form Submitted Login");
+    // console.log("Form Submitted Login");
     event.preventDefault();
     if (validateForm()) {
       const { username, password } = values;
@@ -54,7 +54,7 @@ export default function Login() {
       <FormContainer>
         <form action="" onSubmit={(event) => handleSubmit(event)}>
           <div className="brand">
-            <h1>Image Drive</h1>
+            <h1>Image Hub</h1>
             <h2>LOGIN</h2>
           </div>
           <input

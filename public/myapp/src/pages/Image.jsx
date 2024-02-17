@@ -53,7 +53,7 @@ export default function Image() {
       .post(uploadimagesRoute, formData)
       .then((res) => {
         setreload((prevReload) => !prevReload);
-        console.log(res.data.message);
+        // console.log(res.data.message);
       })
       .catch((error) => console.error(error));
   };
@@ -80,7 +80,7 @@ export default function Image() {
   return (
     <Container>
       <div className="top-section">
-        <h1>Image Drive</h1>
+        <h1>Image Hub</h1>
         <h2>Please Select your file and click Upload.</h2>
         <input type="file" onChange={(e) => setFile(e.target.files[0])} />
         <button onClick={handleUpload}>Upload</button>

@@ -58,7 +58,7 @@ router.post("/upload", singleUpload, async (req, res) => {
   
   router.post("/deleteImage", async (req, res) => {
     try {
-      console.log("Delete Route");
+      // console.log("Delete Route");
       const userId = req.body.userid;
       const imageName = req.body.imagename;
       const user = await users.findById(userId);

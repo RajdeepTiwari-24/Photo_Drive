@@ -59,7 +59,7 @@ export default function Register() {
         navigate("/image");
       }
     }
-    console.log("Form Submitted register");
+    // console.log("Form Submitted register");
   };
 
   return (
@@ -67,7 +67,7 @@ export default function Register() {
       <FormContainer>
         <form action="" onSubmit={(event) => handleSubmit(event)}>
           <div className="brand">
-            <h1>Image Drive</h1>
+            <h1>Image Hub</h1>
             <h2>REGISTER</h2>
           </div>
           <input

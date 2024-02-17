@@ -3,6 +3,7 @@ import axios from "axios";
 import styled from "styled-components";
 import { useNavigate, Link } from "react-router-dom";
 import { loginRoute } from "../utils/APIRoutes";
+import logo from "../assets/logo.png";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -54,7 +55,10 @@ export default function Login() {
       <FormContainer>
         <form action="" onSubmit={(event) => handleSubmit(event)}>
           <div className="brand">
-            <h1>Image Hub</h1>
+            <div className="heading">
+              <img className="logo" src={logo}/>
+              <h1>Image Hub</h1>
+          </div>
             <h2>LOGIN</h2>
           </div>
           <input
@@ -96,6 +100,11 @@ const FormContainer = styled.div`
   background-image: url("https://img.freepik.com/free-vector/neumorphic-round-shape-design-empty-white-banner_1017-43171.jpg?w=1380&t=st=1707828356~exp=1707828956~hmac=463bffd3b2c0102d76ec1f6a0892cd0eaec094e886360509f679bb5b51fd2892");
   background-repeat: no-repeat;
   background-size: cover;
+  .heading{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   .brand {
     display: flex;
     flex-direction: column;

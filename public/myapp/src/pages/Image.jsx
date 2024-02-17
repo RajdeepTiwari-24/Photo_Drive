@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import loader from "../assets/loader.gif";
+import logo from "../assets/logo.png";
 import axios from "axios";
 import {
   uploadimagesRoute,
@@ -80,7 +81,10 @@ export default function Image() {
   return (
     <Container>
       <div className="top-section">
-        <h1>Image Hub</h1>
+        <div className="heading">
+          <img className="logo" src={logo}/>
+          <h1>Image Hub</h1>
+        </div>
         <h2>Please Select your file and click Upload.</h2>
         <input type="file" onChange={(e) => setFile(e.target.files[0])} />
         <button onClick={handleUpload}>Upload</button>
@@ -137,6 +141,11 @@ const Container = styled.div`
   background-repeat: repeat-x;
   background-attachment: fixed;
   /* height: 100vh; */
+  .heading{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   .top-section {
     width: 700px;
     padding: 25px;
